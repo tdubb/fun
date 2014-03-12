@@ -1,0 +1,47 @@
+<h1>Listing records</h1>
+
+<%= form_tag import_records_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Purchaser name</th>
+      <th>Item description</th>
+      <th>Item price</th>
+      <th>Purchase count</th>
+      <th>Merchant address</th>
+      <th>Merchant name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @y = 0 %>
+    <% @records.each do |record| %>
+      <tr>
+        <td><%= record.purchaser_name %></td>
+        <td><%= record.item_description %></td>
+        <td><%= record.item_price %></td>
+        <td><%= record.purchase_count %></td>
+        <td><%= record.merchant_address %></td>
+        <td><%= record.merchant_name %></td>
+        <td><%= link_to 'Show', record %></td>
+        <td><%= link_to 'Edit', edit_record_path(record) %></td>
+        <td><%= link_to 'Destroy', record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+       <% @x = record.item_price * record.purchase_count %>
+      <% @y += @x %>
+    <% end %>
+  </tbody>
+</table>
+
+<h1>Gross total: $<%= @y %></h1>
+
+<br>
+
+<%= link_to 'New Record', new_record_path %>
